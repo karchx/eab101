@@ -13,7 +13,7 @@ pub fn buildAdjacencyMatrix(
     var matrix = try allocator.alloc([]u8, n);
     for (matrix) |*row| {
         row.* = try allocator.alloc(u8, n);
-        std.mem.set(u8, row.*, 0);
+        @memset(row.*, 0);
     }
 
     for (relation) |p| {
