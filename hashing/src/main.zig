@@ -1,19 +1,28 @@
 const std = @import("std");
 
-fn simpleHash(x: i32, bucket_count: i32) i32 {
-    return @mod(x, bucket_count);
+fn phiOfN(p: i32, q: i32) i32 {
+    return (p - 1) * (q - 1);
+}
+
+fn equivalentModPhi(a: i32, b: i32, phi: i32) i32 {
+    return @mod((a - b), phi);
 }
 
 pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
-    const bucket_count = 5;
+    const p = 7;
+    const q = 13;
+    const phi = phiOfN(p, q);
 
-    const values = [_]i32{12, 17, 22, 37, 42};
+    try stdout.print("RSA setup: p = {d}, q = {d}, φ(n) = {d}\n", .{p, q, phi});
 
-    try stdout.print("Hashing with {d} buckets:\n", .{bucket_count});
+    const a = 35;
+    const b = 99;
 
-    for (values) |val| {
-        try stdout.print("Value: {d}, Bucket: {d}\n", .{val, simpleHash(val, bucket_count)});
+    if (equivalentModPhi(a, b, phi) == 0) {
+        try stdout.print("{d} = {d} (mod {d})\n", .{a, b, phi});
+    } else {
+        try stdout.print("{d} ≠ {d} (mod {d})\n", .{a, b, phi});
     }
 }
 
