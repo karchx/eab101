@@ -1,6 +1,6 @@
 const std = @import("std");
 
-pub fn hash(s: []const u8) u32 {
+pub fn hash32(s: []const u8) u32 {
     // FNV-1a hash
     var h: u32 = 0x811C9DC5;
     for (s) |b| {
